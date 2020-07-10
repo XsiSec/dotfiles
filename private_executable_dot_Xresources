@@ -1,0 +1,10 @@
+Xft.dpi: 96
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+X!ft.autohint: false
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcdfilter
+xterm*termName: xterm-256color
+
+

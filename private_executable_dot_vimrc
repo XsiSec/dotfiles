@@ -1,0 +1,213 @@
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+syntax enable
+set tabstop=4
+set shiftwidth=4
+set expandtab
+set number
+set tabpagemax=15
+set title
+filetype plugin indent on
+
+
+
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+
+
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'joshdick/onedark.vim'
+
+Plug 'janko/vim-test'
+Plug 'preservim/nerdtree',
+Plug 'thaerkh/vim-workspace'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'majutsushi/tagbar'
+Plug 'mikelue/vim-maven-plugin'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'jistr/vim-nerdtree-tabs'
+
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'sainnhe/forest-night'
+
+Plug 'kaicataldo/material.vim'
+
+"nerd comments
+Plug 'preservim/nerdcommenter'
+
+"Icons for nerdtree.
+Plug 'ryanoasis/vim-devicons'
+
+"Nerdtree Sync
+Plug 'unkiwii/vim-nerdtree-sync'
+let g:nerdtree_sync_cursorline = 1
+
+"Search file to open with :CtrlP
+Plug 'ctrlpvim/ctrlp.vim'
+
+"Nice start page when starting VIM without a file
+Plug 'mhinz/vim-startify'
+
+
+" ... your other plugins
+
+Plug 'https://gitlab.com/code-stats/code-stats-vim.git'
+
+" Optional: If you want a nice status line in Vim
+Plug 'vim-airline/vim-airline'
+
+
+
+Plug 'joshdick/onedark.vim'
+
+
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+
+
+call plug#end()
+
+colorscheme onedark
+
+
+let g:workspace_create_new_tabs = 0  " enabled = 1 (default), disabled = 0
+nnoremap <leader>s :ToggleWorkspace<CR>
+let g:workspace_autosave_always = 1
+
+autocmd VimEnter * NERDTree
+
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:airline#extensions#tabline#enabled = 1
+
+
+
+let g:codestats_api_key = 'SFMyNTY.V0hOcFUyVmojI05EQTJPUT09.vbhlxzkw8s6i6CDdSBugpC05_xzD3MLcJkywF5HGWG0'
+
+" Optional: configure vim-airline to display status
+
+"let g:airline_section_x = airline#section#create_right(['tagbar', 'filetype', '%{CodeStatsXp()}'])
+
+
+
+
+imap <Tab> <C-P>
+
+
+"Switch tabs
+
+map <S-Right> :tabn<CR>
+map <S-Left>  :tabp<CR>
+
+"focus on tree
+map <A-Right> <C-W>l
+map <A-Left> <C-W>h
+
+
+"Amount of lines to scroll.
+noremap <PageDown> 4<C-e>
+noremap <PageUp> 4<C-y>
+
+
+
+"nnoremap <buffer> <F9> :exec '!pytest' shellescape(@%, 1)<cr>
+
+
+"execture without args."
+nnoremap <C-r> :!bash %<CR>
+"execute with args.
+nnoremap <c-x> :!bash % <c-r>=input("stdin: ")<cr><cr>
+ 
+
+
+
+
+
+"NerdCommenter
+nmap <C-S-c>   <Plug>NERDCommenterToggle
+vmap <C-S-c>   <Plug>NERDCommenterToggle<CR>gv
+
+
+"Move columns
+nmap <C-S-l> :vertical res-5<CR>
+nmap <C-S-j> :vertical res+5<CR>
+nmap <C-S-i> :res-5<CR>
+nmap <C-S-k> :res+5<CR>
+
+
+
+"to paste blocks
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+
+"Insert mode
+inoremap <C-j> <ESC>:m .+1<CR>==gi
+inoremap <C-k> <ESC>:m .-2<CR>==gi
+
+" Visual mode
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
+
+"" Tabs
+
+map <C-t> :NERDTreeToggle<cr>
+
+
+let NERDTreeMapOpenInTab='\r'
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
+
+if !has('gui_running') && $TERM !~ 'xfce4-terminal' && !has('nvim')
+    if $TERM =~ 'rxvt' || $TERM == 'linux'
+        execute "set <c-left>=\<esc>Od"
+        execute "set <c-right>=\<esc>Oc"
+    else
+        execute "set <c-left>=\<esc>1;5D"
+        execute "set <c-right>=\<esc>1;5C"
+    endif
+endif
+
+
+cnoremap <c-left> <s-left>
+cnoremap <c-right> <s-right>
+
+
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent execute "!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
+
+
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+ 
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
+
+" Remove some clipboard stuff to start VIM faster. See
+" https://stackoverflow.com/questions/14635295/vim-takes-a-very-long-time-to-start-up
+""set clipboard=exclude:.*
